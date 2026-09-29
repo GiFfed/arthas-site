@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История Артаса Менетила</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-light">
+    <!-- Фоновые слои -->
+    <div class="lorderon-background">
+        <div class="stained-glass-geometry"></div>
+        <div class="god-rays" id="godRays"></div>
+        <div class="holy-motes-container" id="holy-motes"></div>
+    </div>
+    <div class="northrend-background">
+        <div class="ice-abyss"></div>
+        <div class="frozen-blizzard"></div>
+    </div>
+
+    <!-- Переключатель темы -->
+    <div class="theme-toggle-container">
+        <button id="theme-toggle-btn" class="toggle-btn">Присягнуть Тьме ❄️</button>
+    </div>
+
+    <!-- Шапка страницы -->
+    <header class="hero-section">
+        <div class="hero-avatar avatar-light">
+            <img src="arthas-light.jpg" alt="Принц паладин Артас">
+        </div>
+        <div class="hero-avatar avatar-dark">
+            <img src="arthas-dark.jpg" alt="Король Лич Артас">
+        </div>
+        <h1 id="main-title">Принц Артас Менетил</h1>
+        <p class="subtitle">От праведного паладина до Короля-Лича</p>
+    </header>
+
+    <!-- Интерактивная шкала падения -->
+    <section class="corruption-section tilt-card">
+        <h2>Шкала падения Души</h2>
+        <p class="section-description">Отмечайте ключевые решения Артаса, чтобы увидеть, как Свет Лордерона уступает место вечной мерзлоте.</p>
+        <div class="meter-container">
+            <div class="meter-bar" id="corruption-bar"></div>
+            <span class="meter-text" id="corruption-text">Человечность: 100%</span>
+        </div>
+        <div class="milestone-grid">
+            <label class="milestone-card">
+                <input type="checkbox" class="milestone-trigger" data-weight="25">
+                <span class="checkbox-custom"></span>
+                <div class="milestone-info">
+                    <strong>Очищение Стратхольма</strong>
+                    <span>Артас выбирает меньшее зло ради спасения королевства.</span>
+                </div>
+            </label>
+            <label class="milestone-card">
+                <input type="checkbox" class="milestone-trigger" data-weight="25">
+                <span class="checkbox-custom"></span>
+                <div class="milestone-info">
+                    <strong>Сожжение кораблей</strong>
+                    <span>Предательство наемников в Нордсколе. Пути назад нет.</span>
+                </div>
+            </label>
+            <label class="milestone-card">
+                <input type="checkbox" class="milestone-trigger" data-weight="25">
+                <span class="checkbox-custom"></span>
+                <div class="milestone-info">
+                    <strong>Меч Фростморн</strong>
+                    <span>«Я заплачу любую цену, если это спасет мой народ».</span>
+                </div>
+            </label>
+            <label class="milestone-card">
+                <input type="checkbox" class="milestone-trigger" data-weight="25">
+                <span class="checkbox-custom"></span>
+                <div class="milestone-info">
+                    <strong>Убийство короля Теренаса</strong>
+                    <span>«Сын мой... Что ты делаешь? — Короную вас, отец».</span>
+                </div>
+            </label>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <section class="biography-section tilt-card">
+            <h2>Увлечения Артаса в юности и становление паладина</h2>
+            <p>До своего трагического падения принц Артас Менетил рос как истинная надежда всего Лордерона. Будучи наследником престола, он находился под пристальным надзором лучших наставников королевства, которые ковали из него не просто правителя, а защитника своего народа.</p>
+            <ul>
+                <li><strong>Верховая езда и глубокая привязанность:</strong> С самых ранних лет Артас обожал лошадей. Он проводил часы в королевских конюшнях и лично присутствовал при рождении своего верного коня Непобедимого.</li>
+                <li><strong>Охота в лесах Лордерона:</strong> Принц оттачивал свои навыки выслеживания и выносливости в диких лесах, участвуя в масштабных королевских охотах.</li>
+                <li><strong>Военное дело и благословение Света:</strong> Под руководством Утера Светоносного Артас изучал кодекс чести, основы тактики и учился призывать целительную силу Святого Света.</li>
+            </ul>
+        </section>
+
+        <section class="runes-section tilt-card">
+            <h2>Древние Руны Ледяной Скорби</h2>
+            <p class="section-description">Прикоснитесь к темным символам, высеченным на лезвии проклятого клинка.</p>
+            <div class="runes-container">
+                <div class="rune-card" data-rune="1">
+                    <span class="rune-symbol">ᚠ</span>
+                    <span class="rune-title">Руна Жертвы</span>
+                    <p class="rune-text">Требует отречения от прошлых привязанностей ради достижения абсолютного могущества.</p>
+                </div>
+                <div class="rune-card" data-rune="2">
+                    <span class="rune-symbol">ᚢ</span>
+                    <span class="rune-title">Руна Мертвых</span>
+                    <p class="rune-text">Дарует власть над плотью и духом павших воинов, подчиняя их воле хозяина.</p>
+                </div>
+                <div class="rune-card" data-rune="3">
+                    <span class="rune-symbol">ᚦ</span>
+                    <span class="rune-title">Руна Хлада</span>
+                    <p class="rune-text">Замораживает кровь в жилах врагов, превращая их в хрупкое изваяние.</p>
+                </div>
+                <div class="rune-card" data-rune="4">
+                    <span class="rune-symbol">ᚨ</span>
+                    <span class="rune-title">Руна Голода</span>
+                    <p class="rune-text">Непрерывно жаждет душ, подпитывая силы своего владельца в бою.</p>
+                </div>
+                <div class="rune-card" data-rune="5">
+                    <span class="rune-symbol">ᚱ</span>
+                    <span class="rune-title">Руна Власти</span>
+                    <p class="rune-text">Венец Короля-лича, дарующий ментальный контроль над Плетью по всему Азероту.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="goals-section tilt-card">
+            <h2>Главные цели, задачи и роковые решения</h2>
+            <p>Когда на земли Лордерона пришла таинственная чума Культа Проклятых, превращающая живых людей в безмозглых зомби Плети, праведный гнев ослепил молодого принца.</p>
+            <ol>
+                <li><strong>Защита подданных Лордерона:</strong> Первоочередной задачей принца было остановить распространение зараженного зерна по городам и деревням.</li>
+                <li><strong>Очищение Стратхольма (Роковая точка):</strong> Осознав, что все жители мегаполиса уже заражены чумой, Артас принял страшное решение — уничтожить весь город.</li>
+                <li><strong>Одержимая месть Мал'Ганису:</strong> Ослепленный яростью, Артас отправился в ледяные пустоши Нордскола ради уничтожения повелителя ужаса.</li>
+            </ol>
+        </section>
+
+        <section class="table-section tilt-card">
+            <h2>Хронология и ключевые этапы судьбы героя</h2>
+            <p class="section-description">В этой таблице подробно прослежен трагический путь Артаса.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Период жизни и статус</th>
+                            <th>Роль в истории Азерота</th>
+                            <th>Краткое описание ключевых событий судьбы</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="stage-light">
+                            <td><strong>Молодость и паладинство</strong></td>
+                            <td>Наследный принц Лордерона, преданный рыцарь Ордена Серебряной Длани.</td>
+                            <td>Искренне желал защитить свой народ от чумы. Из-за отчаяния проявил излишнюю жестокость.</td>
+                        </tr>
+                        <tr class="stage-dark">
+                            <td><strong>Поход в Нордскол и падение</strong></td>
+                            <td>Первый и величайший Рыцарь Смерти, покорный слуга Короля-лича.</td>
+                            <td>В Нордсколе взял проклятый рунический меч Ледяная Скорбь. Потерял душу и уничтожил свое королевство.</td>
+                        </tr>
+                        <tr class="stage-lich">
+                            <td><strong>Финал пути и Ледяной Трон</strong></td>
+                            <td>Полноправный Король-лич, повелитель Ледяной Короны и лидер Плети.</td>
+                            <td>Поднялся на вершину Цитадели и слился в единое целое с духом Нер'зула.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="form-section tilt-card">
+            <h2>Ваше мнение о судьбе принца</h2>
+            <p class="section-description">Был ли у Артаса выбор, или он стал жертвой обстоятельств?</p>
+            <form id="feedback-form">
+                <div class="form-group">
+                    <label for="user-name">Ваше имя или игровой никнейм:</label>
+                    <input type="text" id="user-name" name="username" required placeholder="Например, Джайна...">
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Электронная почта для связи:</label>
+                    <input type="email" id="user-email" name="email" required placeholder="arthas@lordaeron.ru">
+                </div>
+                <div class="form-group">
+                    <label for="user-opinion">Ваш развернутый вердикт персонажу:</label>
+                    <textarea name="opinion" id="user-opinion" rows="5" required placeholder="Опишите, в какой момент Артас совершил главную ошибку..."></textarea>
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="user-agreement" name="agreement" required>
+                    <label for="user-agreement">Я согласен с тем, что Ледяная Скорбь жаждет крови, и подтверждаю отправку формы</label>
+                </div>
+                <button type="submit" class="submit-btn">Отправить волю Короля-лича</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Оверлей перехода -->
+    <div id="blizzard-overlay" class="blizzard-overlay">
+        <img src="frostmourne.jpg" alt="Меч Фростморн" id="overlay-frostmourne" class="overlay-img img-frostmourne">
+        <img src="shield.png" alt="Герб Лордерона" id="overlay-shield" class="overlay-img img-shield">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

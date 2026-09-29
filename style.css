@@ -1,0 +1,873 @@
+/* ==========================================================================
+   1. ПЕРЕМЕННЫЕ И БАЗОВЫЕ НАСТРОЙКИ
+   ========================================================================== */
+.theme-light {
+    --bg-color: #f7f3e8;
+    --text-color: #3d352e;
+    --accent-color: #dca81d;
+    --card-bg: rgba(255, 255, 255, 0.92); 
+    --input-bg: rgba(255, 255, 255, 0.85);
+    --border-color: #e6dfcc;
+    --shadow: rgba(197, 160, 67, 0.15);
+    --font-heading: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+    --font-body: 'Cinzel', 'Segoe UI', Roboto, sans-serif;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23dca81d' d='M7 2l12 12-4 1 5 7-2 1-5-7-3 4V2z'/%3E%3C/svg%3E"), auto;
+}
+
+.theme-dark {
+    --bg-color: #04080c;
+    --text-color: #dce7f0;
+    --accent-color: #4facfe;
+    --card-bg: rgba(10, 18, 28, 0.85);
+    --input-bg: rgba(5, 12, 20, 0.85);
+    --border-color: rgba(79, 172, 254, 0.25);
+    --shadow: rgba(79, 172, 254, 0.15);
+    --font-heading: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+    --font-body: 'Cinzel', 'Segoe UI', Roboto, sans-serif;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%234facfe' d='M7 2l12 12-4 1 5 7-2 1-5-7-3 4V2z'/%3E%3C/svg%3E"), auto;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    background-color: #04080c;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    transition: background-color 1.2s ease, color 0.8s ease;
+    position: relative;
+}
+
+h1, h2, h3, .toggle-btn, .submit-btn, .rune-symbol {
+    font-family: var(--font-heading);
+}
+
+/* ==========================================================================
+   2. АНИМИРОВАННЫЕ ФОНЫ
+   ========================================================================== */
+.lorderon-background,
+.northrend-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.lorderon-background {
+    z-index: 0;
+    background: #f7f3e8 radial-gradient(circle at 50% 20%, #fffdf5 0%, #f7ebd0 50%, #ebd4a7 100%);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1.2s ease-in-out, visibility 1.2s ease-in-out;
+}
+
+body.dark-phase .lorderon-background {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.stained-glass-geometry {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image: 
+        linear-gradient(30deg, #dca81d 25%, transparent 25%),
+        linear-gradient(150deg, #dca81d 25%, transparent 25%),
+        linear-gradient(270deg, #dca81d 25%, transparent 25%);
+    background-size: 100px 173px;
+}
+
+.god-rays {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        115deg,
+        transparent,
+        transparent 60px,
+        rgba(220, 168, 29, 0.12) 80px,
+        rgba(255, 235, 179, 0.25) 120px,
+        rgba(220, 168, 29, 0.12) 160px,
+        transparent 180px
+    );
+    filter: blur(6px);
+    mix-blend-mode: overlay;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+body.dark-phase .god-rays {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+.holy-motes-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.holy-mote {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #dca81d, 0 0 15px #ffffff;
+    animation: floatMote linear infinite;
+    opacity: 0;
+}
+
+@keyframes floatMote {
+    0% { transform: translateY(105vh) scale(0.6); opacity: 0; }
+    20% { opacity: 0.9; }
+    80% { opacity: 0.9; }
+    100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
+}
+
+.northrend-background {
+    z-index: 0;
+    background: #04080c radial-gradient(circle at 50% 30%, #0a1e36 0%, #040e1a 60%, #01050a 100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease-in-out, visibility 1.2s ease-in-out;
+}
+
+body.dark-phase .northrend-background {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ice-abyss {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 40%, rgba(79, 172, 254, 0.2) 0%, rgba(0, 100, 255, 0.05) 60%, transparent 85%);
+    filter: blur(40px);
+    animation: pulseAbyss 6s ease-in-out infinite alternate;
+}
+
+.frozen-blizzard {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+@keyframes pulseAbyss {
+    0% { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.08); }
+}
+
+/* ==========================================================================
+   3. HERO-СЕКЦИЯ И АВАТАРЫ
+   ========================================================================== */
+.hero-section {
+    background-color: var(--card-bg);
+    background-image: radial-gradient(
+        250px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(79, 172, 254, 0.12) 0%,
+        rgba(79, 172, 254, 0) 100%
+    );
+    text-align: center;
+    padding: 60px 20px;
+    border-bottom: 3px solid var(--accent-color);
+    transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.theme-light .hero-section {
+    background-image: radial-gradient(
+        250px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+        rgba(220, 168, 29, 0.18) 0%, 
+        rgba(220, 168, 29, 0) 100%
+    );
+}
+
+.hero-section .hero-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 4px solid var(--accent-color);
+    box-shadow: 0 8px 24px var(--shadow);
+    transition: border-color 0.8s ease, box-shadow 0.8s ease;
+}
+
+.hero-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+}
+
+.theme-light .avatar-dark { display: none; }
+.theme-dark .avatar-light { display: none; }
+
+.theme-light .hero-avatar {
+    filter: drop-shadow(0 0 12px rgba(220, 168, 29, 0.4));
+    animation: holyGlow 4s ease-in-out infinite;
+}
+
+.theme-dark .hero-avatar {
+    filter: drop-shadow(0 0 15px rgba(79, 172, 254, 0.6));
+    animation: eyeGlow 4s ease-in-out infinite;
+}
+
+@keyframes holyGlow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(220, 168, 29, 0.3)); }
+    50% { filter: drop-shadow(0 0 20px rgba(220, 168, 29, 0.6)); }
+}
+
+@keyframes eyeGlow {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.4)); }
+    50% { filter: drop-shadow(0 0 25px rgba(79, 172, 254, 0.8)); }
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    margin-top: 20px;
+    color: var(--accent-color);
+    letter-spacing: 1px;
+}
+
+.hero-section .subtitle {
+    display: inline-block;
+    border-right: 3px solid var(--accent-color);
+    white-space: normal;
+    animation: blink-caret 1s step-end infinite;
+    min-height: 1.5rem;
+    padding-right: 4px;
+    font-size: 1.20rem;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    transition: text-shadow 0.5s ease, color 0.5s ease;
+}
+
+.theme-dark .hero-section .subtitle {
+    text-shadow: 0 0 10px rgba(79, 172, 254, 0.4);
+}
+
+.subtitle-jaina { color: #bca0f7 !important; text-shadow: 0 0 15px rgba(163, 112, 247, 0.6) !important; }
+.subtitle-uther { color: #ffe677 !important; text-shadow: 0 0 15px rgba(255, 218, 68, 0.6) !important; }
+.subtitle-malganis { color: #66ff99 !important; text-shadow: 0 0 15px rgba(0, 255, 102, 0.6) !important; }
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--accent-color); }
+}
+
+/* ==========================================================================
+   4. ШКАЛА ПАДЕНИЯ И МЕДАЛЬОНЫ ГРЕХОВ
+   ========================================================================== */
+.corruption-section {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 35px;
+    margin: 30px auto;
+    max-width: 800px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px var(--shadow);
+    transition: box-shadow 0.4s ease, border-color 0.4s ease, background-color 0.8s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    z-index: 2;
+}
+
+.corruption-section h2 {
+    color: var(--accent-color);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.corruption-section .section-description {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-bottom: 25px;
+}
+
+.meter-container {
+    width: 100%;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+}
+
+.meter-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #110c0f 0%, #102a45 40%, #0b5394 70%, #4facfe 100%);
+    box-shadow: 0 0 10px rgba(79, 172, 254, 0.6);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.meter-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.milestone-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 600px) {
+    .milestone-grid { grid-template-columns: 1fr; }
+}
+
+.milestone-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-dark .milestone-card {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.milestone-card input[type="checkbox"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.checkbox-custom {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.milestone-card input:checked ~ .checkbox-custom {
+    background: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+    transform: rotate(180deg);
+}
+
+.milestone-card input:checked ~ .checkbox-custom::after {
+    content: '❄';
+    position: absolute;
+    color: #fff;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.milestone-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.milestone-info strong {
+    color: var(--accent-color);
+    font-size: 0.95rem;
+}
+
+.milestone-info span {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: 3px;
+}
+
+/* ==========================================================================
+   5. ВЫЛЕТАЮЩИЙ БОЕВОЙ ТЕКСТ
+   ========================================================================== */
+.floating-text {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.2rem;
+    animation: floatCombatText 1.2s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.floating-text.dark { color: #4facfe; text-shadow: 0 0 10px rgba(79, 172, 254, 0.8); }
+.floating-text.light { color: #ffe677; text-shadow: 0 0 10px rgba(255, 218, 68, 0.8); }
+
+@keyframes floatCombatText {
+    0% { opacity: 0; transform: translateY(0) scale(0.6); }
+    20% { opacity: 1; transform: translateY(-20px) scale(1.2); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-60px) scale(0.9); }
+}
+
+/* ==========================================================================
+   6. СЕКЦИЯ РУН
+   ========================================================================== */
+.runes-section {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 35px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px var(--shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    z-index: 2;
+}
+
+.runes-section h2 {
+    color: var(--accent-color);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.runes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.rune-card {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.rune-card:hover {
+    transform: translateY(-3px);
+}
+
+.rune-symbol {
+    display: block;
+    font-size: 2.2rem;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.rune-card:hover .rune-symbol {
+    transform: scale(1.15);
+    text-shadow: 0 0 15px var(--accent-color);
+}
+
+.rune-title {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 6px;
+}
+
+.rune-text {
+    font-size: 0.75rem;
+    opacity: 0.75;
+    line-height: 1.3;
+}
+
+.rune-card.rune-active {
+    border-color: #4facfe;
+    background: rgba(79, 172, 254, 0.15);
+    box-shadow: 0 0 20px rgba(79, 172, 254, 0.4);
+}
+
+.rune-card.rune-active .rune-symbol {
+    color: #4facfe;
+    text-shadow: 0 0 20px #4facfe;
+}
+
+/* ==========================================================================
+   7. ОСНОВНОЙ КОНТЕНТ И 3D TILT НАСТРОЙКИ
+   ========================================================================== */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px 20px 40px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.biography-section, 
+.goals-section, 
+.table-section, 
+.form-section {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 35px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px var(--shadow);
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.tilt-card {
+    will-change: transform;
+    transform-style: flat;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.biography-section h2, 
+.goals-section h2, 
+.table-section h2, 
+.form-section h2 {
+    color: var(--accent-color);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.biography-section ul, .goals-section ol {
+    padding-left: 25px;
+    margin-top: 15px;
+}
+
+.biography-section li, .goals-section li {
+    margin-bottom: 12px;
+    padding-left: 5px;
+}
+
+.biography-section li strong, .goals-section li strong {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.section-description {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.section-hidden {
+    opacity: 0;
+    filter: blur(4px);
+    transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), filter 1s ease;
+}
+
+.section-visible {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.tilt-card:hover {
+    box-shadow: 0 12px 28px var(--shadow), 0 0 15px rgba(79, 172, 254, 0.15);
+    border-color: var(--accent-color);
+}
+
+/* Таблица */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+th {
+    color: var(--accent-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.theme-light .stage-light { background-color: rgba(252, 251, 249, 0.4); }
+.theme-light .stage-dark { background-color: rgba(197, 160, 67, 0.04); }
+.theme-light .stage-lich { background-color: rgba(79, 172, 254, 0.04); }
+
+.theme-dark .stage-light { background-color: rgba(79, 172, 254, 0.03); }
+.theme-dark .stage-dark { background-color: rgba(18, 27, 36, 0.4); }
+.theme-dark .stage-lich { background-color: rgba(79, 172, 254, 0.08); }
+
+tr:hover {
+    background-color: rgba(197, 160, 67, 0.1) !important;
+}
+
+/* ==========================================================================
+   8. ФОРМА ОБРАТНОЙ СВЯЗИ И ПЕРЕКЛЮЧАТЕЛЬ
+   ========================================================================== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+input[type="text"], 
+input[type="email"], 
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px var(--shadow);
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+.form-checkbox input {
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+.theme-toggle-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.toggle-btn {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 2px solid var(--accent-color);
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 12px var(--shadow);
+    transition: transform 0.2s ease, background-color 0.8s ease, color 0.8s ease;
+    backdrop-filter: blur(10px);
+}
+
+.toggle-btn:hover {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   9. ЭФФЕКТ СНЕГОПАДА И ОВЕРЛЕИ
+   ========================================================================== */
+.snow-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.snowflake {
+    position: absolute;
+    top: -30px;
+    color: rgba(180, 220, 245, 0.85);
+    user-select: none;
+    pointer-events: none;
+    filter: drop-shadow(0 0 4px rgba(79, 172, 254, 0.4));
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.9; }
+    100% { transform: translateY(105vh) translateX(30px) rotate(180deg); opacity: 0; }
+}
+
+.blizzard-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-img {
+    position: absolute;
+    opacity: 0;
+    max-width: 50vw;
+    max-height: 50vh;
+    object-fit: contain;
+}
+
+.to-dark-active {
+    background: radial-gradient(circle at center, #0b1520 0%, #04080c 60%, #000000 100%);
+    animation: cinematicIceFreeze 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.to-dark-active .img-frostmourne {
+    width: 90vw;
+    max-width: 650px;
+    height: 75vh;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    animation: lichKingAwakening 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.to-light-active {
+    background: radial-gradient(circle, #ffffff 0%, #ffeb99 30%, #dca81d 70%, #614600 100%);
+    animation: holySunStrike 1.6s cubic-bezier(0.15, 0.85, 0.45, 1) forwards;
+}
+
+.to-light-active .img-shield {
+    animation: shieldZoom 1.6s cubic-bezier(0.15, 0.85, 0.45, 1) forwards;
+}
+
+@keyframes cinematicIceFreeze {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes lichKingAwakening {
+    0% { opacity: 0; transform: scale(0.75); }
+    50%, 80% { opacity: 1; transform: scale(0.98); }
+    100% { opacity: 0; transform: scale(1.04); }
+}
+
+@keyframes holySunStrike {
+    0% { opacity: 0; }
+    15%, 70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes shieldZoom {
+    0% { opacity: 0; transform: scale(0.1); }
+    20%, 70% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0; transform: scale(0.9); }
+}
+
+.warcraft-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 16px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    z-index: 100000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    pointer-events: none;
+}
+
+.warcraft-toast.toast-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.theme-light .warcraft-toast { background-color: #fbf8f3; color: #2b251f; border-color: #c5a043; }
+.theme-dark .warcraft-toast { background-color: #121b24; color: #dce7f0; border-color: #4facfe; }
